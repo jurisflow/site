@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jurisflow.com.br/sitemap.xml
