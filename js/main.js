@@ -18,3 +18,52 @@ document.addEventListener('DOMContentLoaded', function () {
     })
   })
 })
+
+document.addEventListener('DOMContentLoaded', function () {
+  // TODO: set the Jurisflow API endpoint that receives access requests
+  var ACCESS_REQUEST_ENDPOINT = ''
+
+  var form = document.getElementById('access-form')
+  var status = document.getElementById('access-form-status')
+
+  if (!form || !status) {
+    return
+  }
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault()
+
+    if (!ACCESS_REQUEST_ENDPOINT) {
+      console.warn('Access request endpoint not configured yet.')
+      return
+    }
+
+    var submitButton = form.querySelector('.access-form-submit')
+    var payload = Object.fromEntries(new FormData(form).entries())
+
+    submitButton.disabled = true
+    status.textContent = ''
+    status.classList.remove('is-success', 'is-error')
+
+    fetch(ACCESS_REQUEST_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(function (response) {
+        if (!response.ok) {
+          throw new Error('Request failed')
+        }
+        form.reset()
+        status.textContent = 'Recebemos sua solicitação! Em breve entraremos em contato pelos dados informados.'
+        status.classList.add('is-success')
+      })
+      .catch(function () {
+        status.textContent = 'Não foi possível enviar sua solicitação agora. Tente novamente em instantes.'
+        status.classList.add('is-error')
+      })
+      .finally(function () {
+        submitButton.disabled = false
+      })
+  })
+})
