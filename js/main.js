@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 document.addEventListener('DOMContentLoaded', function () {
   // TODO: point back to the production API before deploying
-  var ACCESS_REQUEST_ENDPOINT = 'http://127.0.0.1:8000/api/leads'
+  var ACCESS_REQUEST_ENDPOINT = 'https://api.jurisflow.com.br/api/leads'
 
   var form = document.getElementById('access-form')
   var status = document.getElementById('access-form-status')
